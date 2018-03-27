@@ -10,7 +10,7 @@ use app\models\Secciones;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="articulos-form">
+<div class="articulos-form"> 
 
     <?php $form = ActiveForm::begin(); ?>
 
