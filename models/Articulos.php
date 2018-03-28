@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use phpDocumentor\Reflection\Types\This;
 
 /**
  * This is the model class for table "articulos".
@@ -38,6 +39,8 @@ class Articulos extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    
+    
     public function rules()
     {
         return [

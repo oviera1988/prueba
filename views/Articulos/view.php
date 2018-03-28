@@ -38,5 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'precio_lista',
         ],
     ]) ?>
-
+    
+  
+     
 </div>
