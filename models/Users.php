@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\web\IdentityInterface;
+use yii\base\NotSupportedException;
 
 /**
  * This is the model class for table "users".
@@ -19,7 +21,7 @@ use Yii;
  *
  * @property Sucursales $sucursal
  */
-class Users extends \yii\db\ActiveRecord
+class Users extends \yii\db\ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -70,5 +72,39 @@ class Users extends \yii\db\ActiveRecord
     public function getSucursal()
     {
         return $this->hasOne(Sucursales::className(), ['id_sucursal' => 'id_sucursal']);
+    }
+    public function getId()
+    {
+        
+        return $this->user_id;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return $this->auth_key === $authKey;
+    }
+
+    public function getAuthKey()
+    {
+        return $this->auth_key;
+    }
+
+    public static function findIdentity($id)
+    {
+        return self::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        throw new NotSupportedException();
+    }
+    public static function findByUserName($username)
+    {
+        return self::findOne(['username' => $username]);
+    }
+    
+    public function validatePassword($password)
+    {
+        return $this->password_hash === $password;
     }
 }

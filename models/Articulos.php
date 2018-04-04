@@ -44,10 +44,10 @@ class Articulos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sku', 'descripcion'], 'required'],
+            [['sku', 'descripcion', 'id_seccion'], 'required'],
             [['sku', 'id_seccion', 'id_categoria'], 'integer'],
             [['descripcion'], 'string'],
-            [['iva', 'cpp', 'precio_lista'], 'number'],
+            [['iva', 'cpp', 'precio_lista','id_seccion'], 'number'],
             [['estado'], 'string', 'max' => 1],
             [['sku'], 'unique'],
             [['id_categoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['id_categoria' => 'id_categoria']],

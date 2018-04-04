@@ -23,9 +23,12 @@
 		"yiisoft/yii2" : "~2.0.14",
 		"yiisoft/yii2-bootstrap" : "~2.0.0",
 		"yiisoft/yii2-swiftmailer" : "~2.0.0",
-		"kartik-v/yii2-grid": "@dev",
-        "kartik-v/yii2-dropdown-x": "*",
-        "kartik-v/yii2-nav-x": "*"
+		"kartik-v/yii2-grid" : "@dev",
+		"kartik-v/yii2-dropdown-x" : "*",
+		"kartik-v/yii2-nav-x" : "*",
+		"philippfrenzel/yii2fullcalendar" : "*",
+		"kartik-v/yii2-icons" : "@dev",
+		"dektrium/yii2-user": "^0.9.14"
 	},
 	"require-dev" : {
 		"yiisoft/yii2-debug" : "~2.0.0",

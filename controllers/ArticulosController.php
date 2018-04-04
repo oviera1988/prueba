@@ -1,5 +1,4 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
@@ -8,13 +7,16 @@ use app\models\ArticulosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\ArticuloSucursal;
 
 /**
  * ArticulosController implements the CRUD actions for Articulos model.
  */
 class ArticulosController extends Controller
 {
+
     /**
+     *
      * @inheritdoc
      */
     public function behaviors()
@@ -23,29 +25,53 @@ class ArticulosController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
-                ],
+                    'delete' => [
+                        'POST'
+                    ]
+                ]
             ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => [
+                    'index',
+                    'create',
+                    'update',
+                    'view'
+                ],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => [
+                            '@'
+                        ]
+                    ]
+                    // everything else is denied
+                ]
+            ]
+        
         ];
     }
 
     /**
      * Lists all Articulos models.
+     *
      * @return mixed
      */
     public function actionIndex()
     {
         $searchModel = new ArticulosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider
         ]);
     }
 
     /**
      * Displays a single Articulos model.
+     *
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -53,31 +79,36 @@ class ArticulosController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id)
         ]);
     }
 
     /**
      * Creates a new Articulos model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     *
      * @return mixed
      */
     public function actionCreate()
     {
         $model = new Articulos();
-
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->sku]);
+            return $this->redirect([
+                'view',
+                'id' => $model->sku
+            ]);
         }
-
+        
         return $this->render('create', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
     /**
      * Updates an existing Articulos model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -85,19 +116,23 @@ class ArticulosController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->sku]);
+            return $this->redirect([
+                'view',
+                'id' => $model->sku
+            ]);
         }
-
+        
         return $this->render('update', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
     /**
      * Deletes an existing Articulos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -105,13 +140,33 @@ class ArticulosController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        
+        return $this->redirect([
+            'index'
+        ]);
+    }
 
-        return $this->redirect(['index']);
+    public function actionListado($id)
+    {
+        $dataProvider = ArticuloSucursal::find()->where([
+            'sku' => $id
+        ])->one();  
+        
+        $searchModel = new ArticulosSearch();
+        
+        return $this->render('listado', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
+        ]);
+      
+        
+    
     }
 
     /**
      * Finds the Articulos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return Articulos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
@@ -121,7 +176,7 @@ class ArticulosController extends Controller
         if (($model = Articulos::findOne($id)) !== null) {
             return $model;
         }
-
+        
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

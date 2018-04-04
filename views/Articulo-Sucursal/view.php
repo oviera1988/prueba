@@ -43,7 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
     
-    
     	
     <pre><?php print_r($modelArticulos->getAttributes()) ?> </pre>
      <?= DetailView::widget([

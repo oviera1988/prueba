@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'descripcion:ntext',
             'iva',
             //'estado',
-			'id_seccion:text:Seccion',
+			'id_seccion',
             //'cpp',
             'id_categoria',
             'precio_lista',
